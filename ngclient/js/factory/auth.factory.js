@@ -16,5 +16,18 @@ myapp.factory('AuthenticationFactory', function($window) {
 
 
 myapp.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory) {
-	
+	return {
+		login: function(username, password) {
+			return $http.post('http://localhost:3000/login', {
+				username: username, 
+				password: password
+			});
+		}, 
+		logout: function() {
+			if(AuthenticationFactory.isLogged) {
+				AuthenticationFactory.isLogged = false;
+				
+			}
+		}
+	}
 });
