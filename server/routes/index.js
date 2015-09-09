@@ -1,8 +1,8 @@
 var express = require('express');
-var route = express.Router();
+var router = express.Router();
 
 var auth = require('./auth.js');
-var product = require('./products.js');
+var products = require('./products.js');
 var user = require('./users.js');
 
 router.post('/login', auth.login);
