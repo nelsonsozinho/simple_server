@@ -1,4 +1,4 @@
-myapp.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', function($scope, $window, $location, UserAuthFactory, AuthenticationFactory) {
+myApp.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', function($scope, $window, $location, UserAuthFactory, AuthenticationFactory) {
     
     $scope.user = {
         username: 'arvind@myApp.com',
@@ -12,9 +12,20 @@ myapp.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactor
         if(username !== undefined && password !== undefined) {
             UserAuthFactory.login(username, password).success(function(data) {
                 AuthenticationFactory.isLogged = true;
-                AuthenticationFactory.user = data.user.role;
-            };
-        }
+                AuthenticationFactory.user = data.user.username;
+                AuthenticationFactory.userRole = data.user.role;
+
+                $window.sessionStorage.token = data.token;
+                $window.sessionStorage.user = data.user.username;
+                $window.sessionStorage.userRole = data.user.userRole;
+
+                $location.path('/path');
+            }).error(function(status) {
+                alert('Ops something went wrong !');
+            });
+        } else {
+            alert('Invalid credentials');
+        } 
     };
     
 }
